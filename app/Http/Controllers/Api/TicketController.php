@@ -13,7 +13,7 @@ class TicketController extends Controller
         $count = Ticket::count();
         $open = Ticket::where('keterangan', 'open')->count();
         $closed = Ticket::where('keterangan', 'closed')->count();
-        $data = Ticket::orderByRaw('keterangan = 1 DESC')->get();
+        $data = Ticket::orderByRaw('kategori = 1 DESC')->get();
 
         return response()->json([
             'total' => $count,

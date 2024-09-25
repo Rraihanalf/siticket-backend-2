@@ -17,10 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -28,6 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('/admin/users', [UserController::class, 'index']);
+    Route::get('/admin/user/me', [UserController::class, 'profile']);
     Route::get('/admin/user/{id}', [UserController::class, 'userById']);
     Route::post('/admin/user/store', [UserController::class, 'store']);
     Route::put('/admin/user/update/{id}', [UserController::class, 'update']);
@@ -39,6 +36,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
 Route::middleware(['auth:sanctum', 'role:guest'])->group(function () {
     Route::get('/guest/tickets', [TicketController::class, 'index']);
+    Route::get('/guest/user/me', [UserController::class, 'profile']);
     Route::get('/guest/ticket/{id}', [TicketController::class, 'ticketById']);
     Route::post('/guest/ticket/store', [TicketController::class, 'store']);
     Route::put('/guest/ticket/update/{id}', [TicketController::class, 'update']);

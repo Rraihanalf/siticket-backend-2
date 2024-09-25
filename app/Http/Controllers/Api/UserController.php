@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -26,6 +27,14 @@ class UserController extends Controller
         }
         
         return new UserResource($user);
+    }
+
+    public function profile(){
+        $user = Auth::id();
+
+        $me = User::where('id', $user)->get();
+
+        return new UserResource($me);
     }
 
     public function store(Request $request){
