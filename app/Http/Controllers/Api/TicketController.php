@@ -50,12 +50,12 @@ class TicketController extends Controller
         ]);
 
         $validatedData['kategori'] = $this->determineKategori($validatedData['keluhan']);
-        dd($validatedData);
+        // dd($validatedData);
         
-        // Ticket::create($validatedData);
-        // return response()->json([
-        //     'message' => 'Laporan berhasil disimpan',
-        // ], 201);   
+        Ticket::create($validatedData);
+        return response()->json([
+            'message' => 'Laporan berhasil disimpan',
+        ], 201);   
     }
 
     public function update(Request $request, $id){
