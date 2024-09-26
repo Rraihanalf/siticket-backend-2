@@ -19,19 +19,11 @@ class TicketController extends Controller
 
     public function countAll(){
         $count = Ticket::count();
-        return response()->json([
-            'total' => $count
-        ]);
-    }
-    public function countOpen(){
         $open = Ticket::where('keterangan', 'open')->count();
-        return response()->json([
-            'open' => $open
-        ]);
-    }
-    public function countClose(){
         $closed = Ticket::where('keterangan', 'closed')->count();
         return response()->json([
+            'total' => $count,
+            'open' => $open,
             'closed' => $closed
         ]);
     }
