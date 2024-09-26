@@ -10,7 +10,7 @@ use App\Http\Resources\TicketResource;
 class TicketController extends Controller
 {
     public function index(){
-        $data = Ticket::orderByRaw('kategori = 1 DESC')->get();
+        $data = Ticket::orderByRaw("FIELD(kategori, 'kritis', 'tinggi', 'sedang', 'rendah')")->get();
 
         return response()->json([
             'data' => TicketResource::collection($data)
@@ -50,11 +50,12 @@ class TicketController extends Controller
         ]);
 
         $validatedData['kategori'] = $this->determineKategori($validatedData['keluhan']);
-
-        Ticket::create($validatedData);
-        return response()->json([
-            'message' => 'Laporan berhasil disimpan',
-        ], 201);   
+        dd($validatedData);
+        
+        // Ticket::create($validatedData);
+        // return response()->json([
+        //     'message' => 'Laporan berhasil disimpan',
+        // ], 201);   
     }
 
     public function update(Request $request, $id){
@@ -66,20 +67,16 @@ class TicketController extends Controller
             'keterangan' => 'sometimes|required|string|max:255',
         ]);
 
-        // Temukan data keluhan berdasarkan id
         $keluhan = Ticket::find($id);
 
-        // Jika data keluhan tidak ditemukan
         if (!$keluhan) {
             return response()->json([
                 'message' => 'Keluhan tidak ditemukan'
             ], 404);
         }
 
-        // Update data keluhan dengan data baru
         $keluhan->update($request->all());
 
-        // Kembalikan response success
         return response()->json([
             'message' => 'Keluhan berhasil diperbarui',
             'keluhan' => $keluhan
@@ -107,13 +104,13 @@ class TicketController extends Controller
         $keluhan = strtolower($keluhan);
 
         if (strpos($keluhan, 'server down') !== false || strpos($keluhan, 'server mati') !== false || strpos($keluhan, 'listrik mati') !== false || strpos($keluhan, 'listrik padam') !== false || strpos($keluhan, 'database utama rusak') !== false || strpos($keluhan, 'kebocoran data') !== false || strpos($keluhan, 'gangguan wi-fi') !== false || strpos($keluhan, 'jaringan mati') !== false) {
-            return 'Kritis';
+            return 'kritis';
         } elseif (strpos($keluhan, 'internet lambat') !== false || strpos($keluhan, 'email delay') !== false || strpos($keluhan, 'aplikasi crash') !== false) {
-            return 'Tinggi';
-        } elseif (strpos($keluhan, 'komputer mati') !== false || strpos($keluhan, 'proyektor') !== false || strpos($keluhan, 'layar monitor') !== false || strpos($keluhan, 'keyboard rusak') !== false || strpos($keluhan, 'printer tidak berfungsi') !== false) {
-            return 'Sedang';
+            return 'tinggi';
+        } elseif (strpos($keluhan, 'komputer mati') !== false || strpos($keluhan, 'laptop mati') !== false || strpos($keluhan, 'proyektor') !== false || strpos($keluhan, 'layar monitor') !== false || strpos($keluhan, 'keyboard rusak') !== false || strpos($keluhan, 'printer tidak berfungsi') !== false) {
+            return 'sedang';
         } else {
-            return 'Rendah';
+            return 'rendah';
         }
     }
 }

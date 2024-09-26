@@ -13,6 +13,7 @@ class Ticket extends Model
         'nama_pelapor',
         'email_pelapor',
         'sektor',
+        'kategori',
         'keluhan',
         'keterangan',
     ];
