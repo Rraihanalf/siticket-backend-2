@@ -29,8 +29,11 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('/admin/user/store', [UserController::class, 'store']);
     Route::put('/admin/user/update/{id}', [UserController::class, 'update']);
     Route::delete('/admin/user/delete/{id}', [UserController::class, 'destroy']);
-
+    
     Route::get('/admin/tickets', [TicketController::class, 'index']);
+    Route::get('/admin/tickets/all', [TicketController::class, 'countAll']);
+    Route::get('/admin/tickets/open', [TicketController::class, 'countOpen']);
+    Route::get('/admin/tickets/close', [TicketController::class, 'countClose']);
     Route::get('/admin/ticket/{id}', [TicketController::class, 'ticketById']);
 });
 

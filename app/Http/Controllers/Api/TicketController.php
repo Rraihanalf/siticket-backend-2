@@ -10,16 +10,29 @@ use App\Http\Resources\TicketResource;
 class TicketController extends Controller
 {
     public function index(){
-        $count = Ticket::count();
-        $open = Ticket::where('keterangan', 'open')->count();
-        $closed = Ticket::where('keterangan', 'closed')->count();
         $data = Ticket::orderByRaw('kategori = 1 DESC')->get();
 
         return response()->json([
-            'total' => $count,
-            'open' => $open,
-            'closed' => $closed,
             'data' => TicketResource::collection($data)
+        ]);
+    }
+
+    public function countAll(){
+        $count = Ticket::count();
+        return response()->json([
+            'total' => $count
+        ]);
+    }
+    public function countOpen(){
+        $open = Ticket::where('keterangan', 'open')->count();
+        return response()->json([
+            'open' => $open
+        ]);
+    }
+    public function countClose(){
+        $closed = Ticket::where('keterangan', 'closed')->count();
+        return response()->json([
+            'closed' => $closed
         ]);
     }
 
@@ -41,7 +54,10 @@ class TicketController extends Controller
             'email_pelapor' => 'required|email',
             'sektor' => 'required|string|max:50',
             'keluhan' => 'required',
+            'kategori',
         ]);
+
+        $validatedData['kategori'] = $this->determineKategori($validatedData['keluhan']);
 
         Ticket::create($validatedData);
         return response()->json([
@@ -92,5 +108,20 @@ class TicketController extends Controller
         return response()->json([
             'message' => 'Keluhan berhasil dihapus'
         ], 200);
+    }
+
+    private function determineKategori($keluhan)
+    {
+        $keluhan = strtolower($keluhan);
+
+        if (strpos($keluhan, 'server down') !== false || strpos($keluhan, 'server mati') !== false || strpos($keluhan, 'listrik mati') !== false || strpos($keluhan, 'listrik padam') !== false || strpos($keluhan, 'database utama rusak') !== false || strpos($keluhan, 'kebocoran data') !== false || strpos($keluhan, 'gangguan wi-fi') !== false || strpos($keluhan, 'jaringan mati') !== false) {
+            return 'Kritis';
+        } elseif (strpos($keluhan, 'internet lambat') !== false || strpos($keluhan, 'email delay') !== false || strpos($keluhan, 'aplikasi crash') !== false) {
+            return 'Tinggi';
+        } elseif (strpos($keluhan, 'komputer mati') !== false || strpos($keluhan, 'proyektor') !== false || strpos($keluhan, 'layar monitor') !== false || strpos($keluhan, 'keyboard rusak') !== false || strpos($keluhan, 'printer tidak berfungsi') !== false) {
+            return 'Sedang';
+        } else {
+            return 'Rendah';
+        }
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nama_pelapor');
             $table->string('email_pelapor');
             $table->string('sektor');
-            $table->enum('kategori', ['1', '2', '3'])->default('3');
+            $table->enum('kategori', ['kritis', 'tinggi', 'sedang', 'rendah'])->default('rendah');
             $table->text('keluhan');
             $table->enum('keterangan', ['open', 'closed'])->default('open');
             $table->timestamps();
