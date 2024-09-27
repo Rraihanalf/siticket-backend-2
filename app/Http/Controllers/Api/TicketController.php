@@ -10,7 +10,9 @@ use App\Http\Resources\TicketResource;
 class TicketController extends Controller
 {
     public function index(){
-        $data = Ticket::orderByRaw("FIELD(kategori, 'kritis', 'tinggi', 'sedang', 'rendah')")->get();
+        $data = Ticket::orderByRaw("FIELD(kategori, 'kritis', 'tinggi', 'sedang', 'rendah')")
+              ->orderBy('keterangan', 'asc')
+              ->get();
 
         return response()->json([
             'data' => TicketResource::collection($data)

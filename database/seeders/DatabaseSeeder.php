@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory(48)->create();
+        Ticket::factory(98)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
@@ -26,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $user = [
             [
                 'name' => 'Revan Angkasa',
-                'username' => 'revan',
+                'username' => 'admin',
                 'email' => 'revan@gmail.com',
                 'password' => Hash::make('123456'),
                 'role' => 'admin'
@@ -34,7 +35,7 @@ class DatabaseSeeder extends Seeder
 
             [
                 'name' => 'Abigail Rachel',
-                'username' => 'ralie',
+                'username' => 'guest',
                 'email' => 'aralie@gmail.com',
                 'password' => Hash::make('123456'),
                 'role' => 'guest'
