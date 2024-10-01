@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('/admin/tickets', [TicketController::class, 'index']);
     Route::get('/admin/tickets/all', [TicketController::class, 'countAll']);
     Route::get('/admin/ticket/{id}', [TicketController::class, 'ticketById']);
+    Route::get('/admin/mytickets', [TicketController::class, 'ticketByUser']);
 });
 
 Route::middleware(['auth:sanctum', 'role:guest'])->group(function () {
