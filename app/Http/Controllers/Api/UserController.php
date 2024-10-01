@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index(){
-        $data = User::all();
+    public function index()
+    {
+        $data = User::orderByRaw("FIELD(role, 'admin') DESC")->get();
 
         return UserResource::collection($data);
     }

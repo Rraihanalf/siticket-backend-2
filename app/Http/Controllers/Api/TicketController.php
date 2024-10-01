@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\TicketResource;
 
 class TicketController extends Controller
@@ -14,6 +15,19 @@ class TicketController extends Controller
               ->orderBy('keterangan', 'asc')
               ->get();
 
+        return response()->json([
+            'data' => TicketResource::collection($data)
+        ]);
+    }
+
+    public function ticketByUser(){
+        $userEmail = Auth::user()->email;
+
+        $data = Ticket::where('email_pelapor', $userEmail)
+            ->orderByRaw("FIELD(kategori, 'kritis', 'tinggi', 'sedang', 'rendah')")
+            ->orderBy('keterangan', 'asc')
+            ->get();
+    
         return response()->json([
             'data' => TicketResource::collection($data)
         ]);

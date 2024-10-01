@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum', 'role:guest'])->group(function () {
     Route::get('/guest/tickets', [TicketController::class, 'index']);
     Route::get('/guest/tickets/all', [TicketController::class, 'countAll']);
     Route::get('/guest/user/me', [UserController::class, 'profile']);
+    Route::get('/guest/mytickets', [TicketController::class, 'ticketByUser']);
     Route::get('/guest/ticket/{id}', [TicketController::class, 'ticketById']);
     Route::post('/guest/ticket/store', [TicketController::class, 'store']);
     Route::put('/guest/ticket/update/{id}', [TicketController::class, 'update']);
