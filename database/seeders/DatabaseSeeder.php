@@ -126,18 +126,18 @@ class DatabaseSeeder extends Seeder
             [
                 'nama_pelapor' => 'Revan Angkasa',
                 'email_pelapor' => 'revan@gmail.com',
-                'sektor' => 'RISA',
-                'keluhan' => 'gangguan Wi-Fi',
-                'keterangan' => 'open',
-            ],
-            [
-                'nama_pelapor' => 'Revan Angkasa',
-                'email_pelapor' => 'revan@gmail.com',
                 'sektor' => 'IT',
                 'keluhan' => 'layanan server lambat',
                 'keterangan' => 'closed',
             ],
-        
+            [
+                'nama_pelapor' => 'Revan Angkasa',
+                'email_pelapor' => 'revan@gmail.com',
+                'sektor' => 'RISA',
+                'keluhan' => 'gangguan wi-fi',
+                'keterangan' => 'open',
+            ],
+            
             // Abigail Rachel
             [
                 'nama_pelapor' => 'Abigail Rachel',

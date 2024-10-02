@@ -34,6 +34,9 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::get('/admin/tickets/all', [TicketController::class, 'countAll']);
     Route::get('/admin/ticket/{id}', [TicketController::class, 'ticketById']);
     Route::get('/admin/mytickets', [TicketController::class, 'ticketByUser']);
+    Route::post('/admin/ticket/store', [TicketController::class, 'store']);
+    Route::put('/admin/ticket/update/{id}', [TicketController::class, 'update']);
+    Route::delete('/admin/ticket/delete/{id}', [TicketController::class, 'destroy']);
 });
 
 Route::middleware(['auth:sanctum', 'role:guest'])->group(function () {
