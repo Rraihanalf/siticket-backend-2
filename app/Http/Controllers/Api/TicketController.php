@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\TicketResource;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketNotification;
 
 class TicketController extends Controller
 {
     public function index(){
-        $data = Ticket::orderByRaw("FIELD(kategori, 'kritis', 'tinggi', 'sedang', 'rendah')")
-              ->orderBy('keterangan', 'asc')
+        $data = Ticket::orderBy('created_at', 'desc')  
+              ->orderByRaw("FIELD(keterangan, 'open', 'closed')")
               ->get();
 
         return response()->json([
@@ -24,8 +26,8 @@ class TicketController extends Controller
         $userEmail = Auth::user()->email;
 
         $data = Ticket::where('email_pelapor', $userEmail)
-            ->orderByRaw("FIELD(kategori, 'kritis', 'tinggi', 'sedang', 'rendah')")
-            ->orderBy('keterangan', 'asc')
+            ->orderBy('created_at', 'desc')  
+            ->orderByRaw("FIELD(keterangan, 'open', 'closed')")
             ->get();
     
         return response()->json([
@@ -65,10 +67,15 @@ class TicketController extends Controller
             'kategori',
         ]);
 
-        $validatedData['kategori'] = $this->determineKategori($validatedData['keluhan']);
+        $validatedData['kategori'] = "rendah";
         // dd($validatedData);
         
         Ticket::create($validatedData);
+
+        // Mail::to('ekah@unitedtractors.com')->send(new TicketNotification($validatedData));
+        // Mail::to('rahimtokyorahim@gmail.com')->send(new TicketNotification($validatedData));
+        Mail::to('adef6477@gmail.com')->send(new TicketNotification($validatedData));
+
         return response()->json([
             'message' => 'Laporan berhasil disimpan',
         ], 201);   
@@ -115,18 +122,18 @@ class TicketController extends Controller
         ], 200);
     }
 
-    private function determineKategori($keluhan)
-    {
-        $keluhan = strtolower($keluhan);
+    // private function determineKategori($keluhan)
+    // {
+    //     $keluhan = strtolower($keluhan);
 
-        if (strpos($keluhan, 'server down') !== false || strpos($keluhan, 'server mati') !== false || strpos($keluhan, 'listrik mati') !== false || strpos($keluhan, 'listrik padam') !== false || strpos($keluhan, 'database utama rusak') !== false || strpos($keluhan, 'kebocoran data') !== false || strpos($keluhan, 'gangguan wi-fi') !== false || strpos($keluhan, 'jaringan mati') !== false) {
-            return 'kritis';
-        } elseif (strpos($keluhan, 'internet lambat') !== false || strpos($keluhan, 'email delay') !== false || strpos($keluhan, 'aplikasi crash') !== false) {
-            return 'tinggi';
-        } elseif (strpos($keluhan, 'komputer mati') !== false || strpos($keluhan, 'laptop mati') !== false || strpos($keluhan, 'proyektor') !== false || strpos($keluhan, 'layar monitor') !== false || strpos($keluhan, 'keyboard rusak') !== false || strpos($keluhan, 'printer tidak berfungsi') !== false) {
-            return 'sedang';
-        } else {
-            return 'rendah';
-        }
-    }
+    //     if (strpos($keluhan, 'server down') !== false || strpos($keluhan, 'server mati') !== false || strpos($keluhan, 'listrik mati') !== false || strpos($keluhan, 'listrik padam') !== false || strpos($keluhan, 'database utama rusak') !== false || strpos($keluhan, 'kebocoran data') !== false || strpos($keluhan, 'gangguan wi-fi') !== false || strpos($keluhan, 'jaringan mati') !== false) {
+    //         return 'kritis';
+    //     } elseif (strpos($keluhan, 'internet lambat') !== false || strpos($keluhan, 'email delay') !== false || strpos($keluhan, 'aplikasi crash') !== false) {
+    //         return 'tinggi';
+    //     } elseif (strpos($keluhan, 'komputer mati') !== false || strpos($keluhan, 'laptop mati') !== false || strpos($keluhan, 'proyektor') !== false || strpos($keluhan, 'layar monitor') !== false || strpos($keluhan, 'keyboard rusak') !== false || strpos($keluhan, 'printer tidak berfungsi') !== false) {
+    //         return 'sedang';
+    //     } else {
+    //         return 'rendah';
+    //     }
+    // }
 }
