@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum', 'role:tc')->group(function(){
+    
+    Route::get('/tc/user/me', [UserController::class, 'profile']);
     Route::get('/tc/barang', [BarangController::class, 'index']);
     Route::get('/tc/barang/{id}', [BarangController::class, 'barangById']);
     Route::post('/tc/barang/store', [BarangController::class, 'simpan']);
