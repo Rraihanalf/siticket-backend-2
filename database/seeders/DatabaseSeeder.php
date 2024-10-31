@@ -44,10 +44,10 @@ class DatabaseSeeder extends Seeder
             ],
             [
                 'name' => 'Dimas Saputra',
-                'username' => 'dimas123',
+                'username' => 'tc',
                 'email' => 'dimas.saputra@gmail.com',
                 'password' => Hash::make('123456'),
-                'role' => 'admin'
+                'role' => 'tc'
             ],
             [
                 'name' => 'Fira Amalia',

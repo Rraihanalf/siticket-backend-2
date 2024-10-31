@@ -21,22 +21,26 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::middleware('auth:sanctum', 'role:tc')->group(function(){
+    Route::get('/tc/barang', [BarangController::class, 'index']);
+    Route::get('/tc/barang/{id}', [BarangController::class, 'barangById']);
+    Route::post('/tc/barang/store', [BarangController::class, 'simpan']);
+    Route::put('/tc/barang/update/{id}', [BarangController::class, 'update']);
+    Route::delete('/tc/barang/delete/{id}', [BarangController::class, 'destroy']);
+
+    Route::patch('/tc/pinjam/approved/{id}', [PinjamController::class, 'approved']);
+    Route::patch('/tc/pinjam/returned/{id}', [PinjamController::class, 'returned']);
+    Route::get('/tc/pinjam', [PinjamController::class, 'index']);
+    Route::get('/tc/pinjam/{id}', [PinjamController::class, 'pinjamById']);
+    Route::put('/tc/pinjam/update/{id}', [PinjamController::class, 'update']);
+    Route::delete('/tc/pinjam/delete/{id}', [PinjamController::class, 'destroy']);
+});
+
 Route::get('/barang', [BarangController::class, 'index']);
 Route::get('/barang/{id}', [BarangController::class, 'barangById']);
-Route::post('/barang/store', [BarangController::class, 'simpan']);
-Route::put('/barang/update/{id}', [BarangController::class, 'update']);
-Route::delete('/barang/delete/{id}', [BarangController::class, 'destroy']);
-
-
 Route::get('/pinjam', [PinjamController::class, 'index']);
 Route::get('/pinjam/{id}', [PinjamController::class, 'pinjamById']);
 Route::post('/pinjam/store', [PinjamController::class, 'store']);
-Route::put('/pinjam/update/{id}', [PinjamController::class, 'update']);
-Route::patch('/pinjam/approved/{id}', [PinjamController::class, 'approved']);
-Route::patch('/pinjam/returned/{id}', [PinjamController::class, 'returned']);
-Route::delete('/pinjam/delete/{id}', [PinjamController::class, 'destroy']);
-
-
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
