@@ -26,7 +26,8 @@ class Barang extends Model
         'condition', 
         'serial_number', 
         'deskripsi',
-        'quantity'
+        'quantity',
+        'status_barang'
     ];
 
     public function peminjamans()

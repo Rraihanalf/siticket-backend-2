@@ -29,7 +29,7 @@ class BarangController extends Controller
     public function simpan(Request $request){
         $validatedData = $request->validate([
             'corpu_area' => 'required|string',
-            // 'kode_barang' => 'required|string|unique:barangs,kode_barang',
+            'kode_barang' => 'nullable|string|unique:barangs,kode_barang',
             'name_model' => 'required|string',
             'type_model' => 'required|string',
             'manufacture' => 'nullable|string',
@@ -38,20 +38,23 @@ class BarangController extends Controller
             'condition' => 'required|string',
             'serial_number' => 'nullable|string',
             'deskripsi' => 'nullable|string',
+            'quantity' => 'integer|required'
         ]);
 
-        $lastBarang = Barang::where('kode_barang', 'LIKE', 'TJG%')->orderBy('kode_barang', 'desc')->first();
-    
-        if ($lastBarang) {
-            $lastNumber = intval(substr($lastBarang->kode_barang, 3));
-            $newNumber = $lastNumber + 1; 
-        } else {
-            $newNumber = 1; 
+        if($validatedData['kode_barang'] == null){
+            $lastBarang = Barang::where('kode_barang', 'LIKE', 'TJG%')->orderBy('kode_barang', 'desc')->first();
+        
+            if ($lastBarang) {
+                $lastNumber = intval(substr($lastBarang->kode_barang, 3));
+                $newNumber = $lastNumber + 1; 
+            } else {
+                $newNumber = 1; 
+            }
+        
+            $newKodeBarang = 'TJG' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+        
+            $validatedData['kode_barang'] = $newKodeBarang;
         }
-    
-        $newKodeBarang = 'TJG' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
-    
-        $validatedData['kode_barang'] = $newKodeBarang;
 
         // dd($validatedData);
 
@@ -75,6 +78,8 @@ class BarangController extends Controller
             'condition' => 'required|string',
             'serial_number' => 'nullable|string',
             'deskripsi' => 'nullable|string',
+            'quantity' => 'required|integer',
+            'status_barang' => 'required|string'
         ]);
         
         // dd($validatedData);

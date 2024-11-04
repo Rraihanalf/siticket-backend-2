@@ -1008,92 +1008,22 @@ class DatabaseSeeder extends Seeder
             Barang::create($val);
         }
 
-        // $pinjam = [
-        //     [
-        //         'nama_peminjam' => 'Andi Setiawan',
-        //         'email_peminjam' => 'andi.setiawan@example.com',
-        //         'kode_barang' => 'BRG001', // Kamera Digital Canon EOS
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Budi Santoso',
-        //         'email_peminjam' => 'budi.santoso@example.com',
-        //         'kode_barang' => 'BRG002', // Laptop ASUS ROG Strix
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Cynthia Lestari',
-        //         'email_peminjam' => 'cynthia.lestari@example.com',
-        //         'kode_barang' => 'BRG003', // Smartphone Samsung Galaxy S21
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Dewi Anggraini',
-        //         'email_peminjam' => 'dewi.anggraini@example.com',
-        //         'kode_barang' => 'BRG004', // Headphone Sony WH-1000XM4
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Eka Putri',
-        //         'email_peminjam' => 'eka.putri@example.com',
-        //         'kode_barang' => 'BRG005', // Tablet Apple iPad Pro
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Fahmi Rizal',
-        //         'email_peminjam' => 'fahmi.rizal@example.com',
-        //         'kode_barang' => 'BRG006', // Monitor LG UltraWide
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Gina Melati',
-        //         'email_peminjam' => 'gina.melati@example.com',
-        //         'kode_barang' => 'BRG007', // Printer Epson EcoTank
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Hendra Sulaiman',
-        //         'email_peminjam' => 'hendra.sulaiman@example.com',
-        //         'kode_barang' => 'BRG008', // Kamera Action GoPro Hero
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Indah Permatasari',
-        //         'email_peminjam' => 'indah.permatasari@example.com',
-        //         'kode_barang' => 'BRG009', // Speaker JBL Charge 5
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        //     [
-        //         'nama_peminjam' => 'Joko Nugroho',
-        //         'email_peminjam' => 'joko.nugroho@example.com',
-        //         'kode_barang' => 'BRG010', // Drone DJI Mavic Air 2
-        //         'tanggal_pinjam' => now()->format('Y-m-d'),
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ],
-        // ];
+        $pinjam = [
+            [
+                'nama_peminjam' => 'Andi Setiawan',
+                'email_peminjam' => 'andi.setiawan@example.com',
+                'kode_barang' => 'TJG001', // Kamera Digital Canon EOS
+                'tanggal_pinjam' => now()->format('Y-m-d'),
+                'tanggal_kembali' => "2024-11-10",
+                'quantity' => '1',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ];
 
-        // foreach($pinjam as $data => $val){
-        //     Peminjam::create($val);
-        // }
+        foreach($pinjam as $data => $val){
+            Peminjam::create($val);
+        }
 
     }
 }

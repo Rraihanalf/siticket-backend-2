@@ -23,7 +23,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum', 'role:tc')->group(function(){
     
-    Route::get('/tc/user/me', [UserController::class, 'profile']);
+    Route::get('/tc/user/me', [UserController::class, 'profilei']);
     Route::get('/tc/barang', [BarangController::class, 'index']);
     Route::get('/tc/barang/{id}', [BarangController::class, 'barangById']);
     Route::post('/tc/barang/store', [BarangController::class, 'simpan']);

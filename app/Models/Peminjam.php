@@ -14,6 +14,9 @@ class Peminjam extends Model
         'email_peminjam',
         'kode_barang',
         'tanggal_pinjam',
+        'tanggal_kembali',
+        'quantity',
+        'status_pinjam'
     ];
 
     public function barang()
